@@ -1,0 +1,124 @@
+<!Doctype html>
+    <html>
+        <head>
+            <title>Orientation experiment</title>
+            <meta charset='utf-8' />
+            <style>
+                #theBody
+                {
+                    text-align:     center;
+                }
+                #theTable
+                {
+                    height:         200px;
+                    width:          300px;
+                    border:         2px black solid;
+                    font:           12pt bold Georgia, sans-serif;
+                }
+                td
+                {
+                    width:          12.8%;
+                    height:         20%;
+                    text-align:     center;
+                }
+                #col-r1c2,
+                #col-r1c3,
+                #col-r1c4,
+                #col-r1c5,
+                #col-r1c6
+                {
+                    background-color:   #e0e0e0;
+                }
+                #col-r2c1,
+                #col-r3c1,
+                #col-r4c1
+                {
+                    background-color:   #e0e0e0;
+                }
+            </style>
+        </head>
+        <body id='theBody'>
+            <table id='theTable'>
+                <tr id='row1'>
+                    <td id='col-r1c1'>
+                        &nbsp;
+                    </td>
+                    <td id='col-r1c2'>
+                        +180&deg;
+                    </td>
+                    <td id='col-r1c3'>
+                        +90&deg;
+                    </td>
+                    <td id='col-r1c4'>
+                        0&deg;
+                    </td>
+                    <td id='col-r1c5'>
+                        -90&deg;
+                    </td>
+                    <td id='col-r1c6'>
+                        -180&deg;
+                    </td>
+                </tr>
+                <tr id='row2'>
+                    <td id='col-r2c1'>
+                        X:
+                    </td>
+                    <td id='col-r2c2'>
+                        <input type="radio" id="X_plus180" name="X_trans" value="+180">
+                    </td>
+                    <td id='col-r2c3'>
+                        <input type="radio" id="X_plus90" name="X_trans" value="+90">
+                    </td>
+                    <td id='col-r2c4'>
+                        <input type="radio" id="X_0" name="X_trans" value="0" checked='true'>
+                    </td>
+                    <td id='col-r2c5'>
+                        <input type="radio" id="X_minus90" name="X_trans" value="-90">
+                    </td>
+                    <td id='col-r2c6'>
+                        <input type="radio" id="X_minus180" name="X_trans" value="-180">
+                    </td>
+                </tr>
+                <tr id='row3'>
+                    <td id='col-r3c1'>
+                        Y:
+                    </td>
+                    <td id='col-r3c2'>
+                        <input type="radio" id="Y_plus180" name="Y_trans" value="+180">
+                    </td>
+                    <td id='col-r3c3'>
+                        <input type="radio" id="Y_plus90" name="Y_trans" value="+90">
+                    </td>
+                    <td id='col-r3c4'>
+                        <input type="radio" id="Y_0" name="Y_trans" value="0" checked='true'>
+                    </td>
+                    <td id='col-r3c5'>
+                        <input type="radio" id="Y_minus90" name="Y_trans" value="-90">
+                    </td>
+                    <td id='col-r3c6'>
+                        <input type="radio" id="Y_minus180" name="Y_trans" value="-180">
+                    </td>
+                </tr>
+                <tr id='row4'>
+                    <td id='col-r4c1'>
+                        Z:
+                    </td>
+                    <td id='col-r4c2'>
+                        <input type="radio" id="Z_plus180" name="Z_trans" value="+180">
+                    </td>
+                    <td id='col-r4c3'>
+                        <input type="radio" id="Z_plus90" name="Z_trans" value="+90">
+                    </td>
+                    <td id='col-r4c4'>
+                        <input type="radio" id="Z_0" name="Z_trans" value="0" checked='true'>
+                    </td>
+                    <td id='col-r4c5'>
+                        <input type="radio" id="Z_minus90" name="Z_trans" value="-90">
+                    </td>
+                    <td id='col-r4c6'>
+                        <input type="radio" id="Z_minus180" name="Z_trans" value="-180">
+                    </td>
+                </tr>
+            </table>
+        </body>
+    </html>
