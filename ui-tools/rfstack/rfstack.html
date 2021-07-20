@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--
+// Code for the:   ui-tools project.
+// Created:        2019/07/02
+// Copyright (c):  David M. Witten II
+-->
+<html>
+    <head id='theHead'>
+        <title>rfStack Demo</title>
+        <meta charset='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+        <link type='text/css' rel='stylesheet' href='rfstack.css'>
+        <script type='text/javascript' src='defaulthandlers.js' ></script>
+        <script type='text/javascript' src='rflayer.js' ></script>
+        <script type='text/javascript' src='rfimage.js' ></script>
+        <script type='text/javascript' src='rfstack.js' ></script>
+        <script type='text/javascript'>
+            // jshint unused:           false
+            // jshint undef:            false
+            
+            let dmh = new DrawMouseHandler();
+            let mmh = new MeasureMouseHandler();
+            let mag = new MagnifierMouseHandler();
+            
+            document.addEventListener('DOMContentLoaded', function()
+            {
+                // Set up the local buttons to interact with the  Stack object
+                //-----------------------------------------
+                document.querySelector('#btnDraw').onclick     = btnClick;
+                document.querySelector('#btnMeasure').onclick  = localHideImage;
+                document.querySelector('#btnHideAll').onclick  = localHideAll;
+                document.querySelector('#btnShowAll').onclick  = localShowAll;
+                document.querySelector('#btnClearAll').onclick = localClearAll;        // must reference a local function which *calls* the  widget's handler or the handler will execute in the local context.
+
+                // Get the Stack
+                //-----------------------------------------
+                let stack = document.querySelector('#newStack');
+                
+                // Set house events using local handlers below.
+                //-----------------------------------------
+                //stack.layerMouseDown('layer2', localMouseDown);
+                //stack.layerMouseMove('layer2', localMouseMove);
+                //stack.layerMouseUp('layer2',   localMouseUp);
+                
+                // Set layer1 mouse events using MeasureMouseHandler Class
+                //-----------------------------------------
+                stack.layerMouseDown('layer2', mmh.mouseDown);
+                stack.layerMouseMove('layer2', mmh.mouseMove);
+                stack.layerMouseUp('layer2',   mmh.mouseUp);
+
+                // Set layer2 mouse events using DrawMouseHandler Class
+                //-----------------------------------------
+                stack.layerMouseDown('layer1', dmh.mouseDown);
+                stack.layerMouseMove('layer1', dmh.mouseMove);
+                stack.layerMouseUp('layer1',   dmh.mouseUp);
+
+                //// Set layer3 mouse events using MagnifierMouseHandler Class
+                ////-----------------------------------------
+                //stack.layerMouseDown('layer3', mag.mouseDown);
+                //stack.layerMouseMove('layer3', mag.mouseMove);
+                //stack.layerMouseUp('layer3',   mag.mouseUp);
+
+                // change the background  image for the stack
+                //-----------------------------------------
+                //stack.src='/home/dave/Projects/nwjs-dev/ui-tools/rfstack/testdata/GEORGE.JPG';
+            });
+            
+            
+            //-----------------------------------------
+            // toggle visibility of baseImg
+            //-----------------------------------------
+            function localHideImage(e)
+            {
+                console.log(`non-default localHideImage received by: [ ${e.currentTarget.id} ].`);
+                if(document.querySelector('#newStack').hidden)
+                {
+                    document.querySelector('#newStack').hidden = false;
+                }
+                else
+                {
+                    document.querySelector('#newStack').hidden = true;
+                }
+            }
+
+            //-----------------------------------------
+            // hide all of the canvas layers
+            //-----------------------------------------
+            function localHideAll(e)
+            {
+                console.log(`non-default localHideAll received by: [ ${e.currentTarget.id} ].`);
+                document.querySelector('#newStack').hideAll();
+            }
+
+            //-----------------------------------------
+            // Show all of the canvas layers
+            //-----------------------------------------
+            function localShowAll(e)
+            {
+                console.log(`non-default localShowAll received by: [ ${e.currentTarget.id} ].`);
+                document.querySelector('#newStack').showAll();
+            }
+
+            //-----------------------------------------
+            // Clear all of the canvas layers
+            //-----------------------------------------
+            function localClearAll(e)
+            {
+                console.log(`non-default localClearAll received by: [ ${e.currentTarget.id} ].`);
+                document.querySelector('#newStack').clearAll();
+            }
+
+            let ctx = null;
+            let mouseDown = false;
+
+            function localMouseDown(e)
+            {
+                console.log(`non-default localMouseDown received by: [ '#${this.parentNode.host.id}' ].`);
+                ctx = this.parentNode.host._canvas.getContext('2d');
+ 
+                ctx.strokeStyle = "#FF0000";
+                mouseDown = true;
+                ctx.beginPath();
+                ctx.moveTo(e.clientX, e.clientY);
+            }
+            
+            function localMouseMove(e)
+            {
+                if(mouseDown)
+                {
+                    ctx.lineTo(e.clientX, e.clientY);
+                    ctx.stroke();
+                }
+            }
+            
+            function localMouseUp(e)
+            {
+                console.log(`non-default localMouseUp received by: [ '#${this.parentNode.host.id}' ].`);
+                if(mouseDown)
+                {
+                    ctx.lineTo(e.clientX, e.clientY);
+                    ctx.stroke();
+                }
+                mouseDown = false;                
+            }
+            
+            function btnClick(e)
+            {
+                console.log(`btnClick received by: [ ${e.currentTarget.id} ].`);
+            }
+            
+            function msg(e)
+            {
+                alert(`Got: ${e.currentTarget.id}.`);
+            }
+        </script> 
+    </head>
+    <body id='theBody'>
+        <div id='topFrame' class='topFrameClass'>
+            <div id='positionFrame' class='positionFrameClass'>
+    
+                <rf-canvasstack id='newStack'>
+
+                    <img is='rf-imagelayer' id='baseImg' slot='baseImgSlot' role='imglayer' src='/home/dave/Projects/nwjs-dev/ui-tools/rfstack/testdata/CHUNKIE.JPG'></img>
+
+                    <rf-canvaslayer id='layer0' slot='canvasSlot' role='layer'></rf-canvaslayer>
+                    <rf-canvaslayer id='layer1' slot='canvasSlot' role='layer'></rf-canvaslayer>
+                    <rf-canvaslayer id='layer2' slot='canvasSlot' role='layer'></rf-canvaslayer>
+                    <!-- rf-canvaslayer id='layer3' slot='canvasSlot' role='layer'></rf-canvaslayer -->
+
+                </rf-canvasstack>
+                <div id='buttonFrame' class='positionFrameClass'>
+                    <button id='btnDraw'        class='btnClass'>Draw</button>
+                    <button id='btnMeasure'     class='btnClass'>Measure</button>
+                    <button id='btnHideAll'     class='btnClass'>Hide All</button>
+                    <button id='btnShowAll'     class='btnClass'>Show All</button>
+                    <button id='btnClearAll'    class='btnClass'>Clear All</button>
+                </div>
+                
+            </div>
+        
+        </div>
+    </body>
+</html>

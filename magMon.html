@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+// Code for the:   magMon project.
+// Created:        07/14/2021
+// Copyright (c):  David M. Witten II
+-->
+<html>
+    <head id='theHead'>
+        <title>magMon</title>
+        <meta charset='utf-8' />
+        <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0'>
+
+        <link type='text/css' rel='stylesheet' href='./js/libs/jquery-ui-1.12.1/jquery-ui.structure.min.css'>
+        <link type='text/css' rel='stylesheet' href='./js/libs/jquery-ui-1.12.1/jquery-ui.theme.min.css'>
+        <link type='text/css' rel='stylesheet' href='./js/libs/jquery-ui-1.12.1/jquery-ui.min.css'>
+        <link type='text/css' rel='stylesheet' href='./css/magMonitor.css'>
+        <link type='text/css' rel='stylesheet' href='./css/dygraph.css'>
+
+        <script type='text/javascript' src='./js/libs/jquery-3.6.0.min.js'></script>
+        <script type='text/javascript' src='./js/libs/jquery-ui-1.12.1/jquery-ui.min.js'></script>
+        <script type='text/javascript' src='./js/libs/dygraph/dygraph.js'></script>
+        <script type='text/javascript' src='./js/config.js'></script>
+        <script type='text/javascript' src='./js/main.js'></script>
+    </head>
+    <body id='theBody'>
+            <div id='tabs'>
+                <ul>
+                    <li><a href="#tab1" class="active">Monitor</a></li>
+                    <li><a href="#tab2">Configure</a></li>
+                    <li><a href="#tab3">Setup</a></li>
+                </ul>
+                <div id='tab1'>
+                    <fieldset id='fsx'>
+                        <legend> X: </legend>
+                        <div id="div_g_x">
+                        </div>
+                    </fieldset>
+                    <fieldset id='fsy'>
+                        <legend> Y: </legend>
+                        <div id="div_g_y">
+                        </div>
+                    </fieldset>
+                    <fieldset id='fsz'>
+                        <legend> Z: </legend>
+                        <div id="div_g_z">
+                        </div>
+                    </fieldset>
+                    <fieldset id='fsTot'>
+                        <legend> T<sub>M</sub>: </legend>
+                        <div id="div_g_total">
+                        </div>
+                    </fieldset>
+                    <fieldset id='fstmp'>
+                        <legend> &deg;C: </legend>
+                        <div id="div_g_rTemp">
+                        </div>
+                    </fieldset>
+                    <div id='buttonBar'>
+                        <button id='resetXZoom'> Reset X </button>
+                        <button id='resetYZoom'> Reset Y </button>
+                        <button id='resetZZoom'> Reset Z </button>
+                        <button id='resetTotalZoom'>Reset Total</button>
+                    </div>
+                </div>
+                <div id='tab2'>
+                    <h1>Tab 2</h1>
+                    <p></p>
+                </div>
+                <div id='tab3'>
+                    <h1>Tab 3</h1>
+                    <p></p>
+                </div>
+            </div>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+html
+{
+    height:             100vh;
+    width:              100vw;
+    background-color:   #404040;
+    margin:             0px;
+    padding:            0px;
+    overflow-x:         hidden;
+    overflow-y:         hidden;
+
+}
+body
+{
+    height:             100vh;
+    width:              100vw;
+    background-color:   #404040;
+    margin:             0px;
+    padding:            0px;
+    overflow-x:         hidden;
+    overflow-y:         hidden;
+}
+#tab1,
+#tab2,
+#tab3
+{
+    background-color:   #404040;
+}
+#fsx,
+#fsy,
+#fsz,
+#fstmp,
+#fsTot
+{
+    position:           relative;
+    width:              98%;
+    max-width:          98%;
+    margin:             2px;
+    padding:            2px;
+    background-color:   #e0e0e0;
+}
+#fsSettings
+{
+    background-color:   #e0e0e0;
+}
+#div_g_x,
+#div_g_y,
+#div_g_z
+{
+    width:              98%;
+    max-width:          98%;
+    height:             155px;
+}
+#div_g_rTemp
+{
+    width:              98%;
+    max-width:          98%;
+    height:             55px;
+}
+#div_g_total
+{
+    width:              98%;
+    max-width:          98%;
+    height:             175px;
+}
+#buttonBar
+{
+    margin:             10px;
+    /*padding:            2px;*/
+}
+legend
+{
+    height:             18px;
+    /*width:              18px;*/
+    background-color:   gray;
+    color:              white;
+    padding:            3px 4px 3px 4px;
+    display:            block;
+    position:           relative;
+    font:               small-caps bold 10px/18px verdana,arial,sans-serif;
+    border-radius:      4px;
+}
