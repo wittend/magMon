@@ -4,61 +4,76 @@ document.addEventListener('DOMContentLoaded', function()
     let data_x = [];
     let data_y = [];
     let data_z = [];
-    let data_rTemp = [];
     let data_total = [];
+    let data_rTemp = [];
+
+    // Create the Websocket connection.
     let ws = new WebSocket('ws://10.0.0.8:7890/');
 
-    data_x.push([t, null]);
-    data_y.push([t, null]);
-    data_z.push([t, null]);
-    data_rTemp.push([t, null]);
-    data_total.push([t, null]);
+    // Fill the buffer with bogus data so the plot will begin at zero.
+    for (let i = 10; i >= 0; i--)
+    {
+        let x = new Date(t.getTime() - i * 1000);
+        data_x.push([x, -30]);
+        data_y.push([x, -3.0]);
+        data_z.push([x, -60]);
+        data_total.push([x, 70]);
+        data_rTemp.push([x, 20]);
+    }
 
+    // Initialize the pan slider.
+    $( "#slider" ).slider();
+
+    // create the 'X' vector graph object.
     let gx = new Dygraph(document.getElementById("div_g_x"), data_x,
         {
             showRoller: false,
             rollPeriod: 10,
-            panEdgeFraction: 40,
+            panEdgeFraction: 0.40,
             drawPoints: false,
             labelsUTC: true,
             axisLabelFontSize: 12,
             labels: ['Time', 'µT']
         });
+    // create the 'Y' vector graph object.
     let gy = new Dygraph(document.getElementById("div_g_y"), data_y,
         {
             showRoller: false,
             rollPeriod: 10,
-            panEdgeFraction: 40,
+            panEdgeFraction: 0.40,
             drawPoints: false,
             labelsUTC: true,
             axisLabelFontSize: 12,
             labels: ['UTC', 'µT']
         });
+    // create the 'Z' vector graph object.
     let gz = new Dygraph(document.getElementById("div_g_z"), data_z,
         {
             showRoller: false,
             rollPeriod: 10,
-            panEdgeFraction: 40,
+            panEdgeFraction: 0.40,
             drawPoints: false,
             labelsUTC: true,
             axisLabelFontSize: 12,
             labels: ['UTC', 'µT']
         });
+    // create the 'Total field' graph object.
     let gTot = new Dygraph(document.getElementById("div_g_total"), data_total,
         {
             showRoller: false,
             rollPeriod: 10,
-            panEdgeFraction: 40,
+            panEdgeFraction: 0.40,
             drawPoints: false,
             labelsUTC: true,
             axisLabelFontSize: 12,
             labels: ['UTC', 'µT']
         });
+    // create the 'Remote Temperature' graph object.
     let gTemp = new Dygraph(document.getElementById("div_g_rTemp"), data_rTemp,
         {
             showRoller: false,
             rollPeriod: 10,
-            panEdgeFraction: 40,
+            panEdgeFraction: 0.40,
             drawPoints: false,
             labelsUTC: true,
             labels: ['UTC', '°C'],
@@ -67,38 +82,45 @@ document.addEventListener('DOMContentLoaded', function()
             fillGraph: true
         });
 
+    // Function that fires when the WebSocket opens.
     ws.onopen = function()
     {
         document.body.style.backgroundColor = '#606060';
     };
 
+    // Function that fires when the WebSocket closes.
     ws.onclose = function()
     {
         document.body.style.backgroundColor = '#dfc';
     };
 
+    // Function that fires every time a new block of data arrives on the WebSocket.
     ws.onmessage = function(event)
     {
+        // get the event data.
         let res = event.data;
+        // Parse the JOSN object received.
         let resObj = JSON.parse(res);
-        //let strObj = 'ts: ' + resObj.ts + ', lt: ' +  resObj.lt + ', rt: ' + resObj.rt + ', x: ' + resObj.x + ', y: ' + resObj.y + ', z: ' + resObj.z;
-        //document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<br>' + strObj;
 
-        let x = new Date();  // current time
+        let x = new Date();             // get current time
+
+        // push the decoded JSON onto the data stacks.
         data_x.push([x, resObj.x]);
         data_y.push([x, resObj.y]);
         data_z.push([x, resObj.z]);
         data_rTemp.push([x, resObj.rt]);
         data_total.push([x, resObj.Tm]);
+
+        // Update the graphing elements.
         gx.updateOptions( { 'file': data_z } );
         gy.updateOptions( { 'file': data_y } );
         gz.updateOptions( { 'file': data_x } );
-        gTemp.updateOptions( { 'file': data_rTemp } );
         gTot.updateOptions( { 'file': data_total } );
+        gTemp.updateOptions( { 'file': data_rTemp } );
     };
 
     //------------------------------------------
-    // btnXZoom
+    // btnXZoom Reset.
     //------------------------------------------
     let btnXZoom = document.getElementById('resetXZoom');
     function fnresetXZoom(e)
@@ -108,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function()
     btnXZoom.addEventListener('click', fnresetXZoom);
 
     //------------------------------------------
-    // btnYZoom
+    // btnYZoom Reset.
     //------------------------------------------
     let btnYZoom = document.getElementById('resetYZoom');
     function fnresetYZoom(e)
@@ -118,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function()
     btnYZoom.addEventListener('click', fnresetYZoom);
 
     //------------------------------------------
-    // btnZZoom
+    // btnZZoom Reset.
     //------------------------------------------
     let btnZZoom = document.getElementById('resetZZoom');
     function fnresetZZoom(e)
@@ -128,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function()
     btnZZoom.addEventListener('click', fnresetZZoom);
 
     //------------------------------------------
-    // btnZZoom
+    // btnTotalZoom Reset.
     //------------------------------------------
     let btnTotalZoom = document.getElementById('resetTotalZoom');
     function fnresetTotalZoom(e)
@@ -137,10 +159,12 @@ document.addEventListener('DOMContentLoaded', function()
     }
     btnTotalZoom.addEventListener('click', fnresetTotalZoom);
 
-    //document.querySelector('.topFrameClass').style.height = 'calc(100vh - 35px)';
-    //document.querySelector('.tabsetClass').style.height = 'calc(100vh - 35px)';
+    // style the page to have tabs with Jquery-UI.1
     $( "#tabs" ).tabs({heightStyle: 'fill'});
-
-    //makeTabs(".tabsetClass");
+    $('.ui-tabs .ui-tabs-panel').css('padding', '5px');
+    //$('.ui-ui-slider-handle').css('top', '-10px');
+    $('.ui-slider-handle').css('height', '15px');
+    $('.ui-slider-handle').css('top', '-5px');
+    // Load thepage for configuration parameters into the second tab.
     loadConfigPage();
 });
